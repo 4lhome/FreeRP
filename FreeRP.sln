@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeRP.Net.Client.Blazor", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{C19A3DB6-FDFE-4E44-B0C9-7FBED958AC2F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvoiceReader", "src\Plugins\InvoiceReader\InvoiceReader.csproj", "{19ABA0E5-6078-4F93-B544-C305551DB633}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeRP.Net.Client", "src\FreeRP.Net.Client\FreeRP.Net.Client.csproj", "{86C0C95F-239B-4B6D-B614-C12D604E8D15}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeRP.Test", "test\FreeRP.Test\FreeRP.Test.csproj", "{3DBD6B81-DD6C-4CB8-9EAB-299D059B2AFC}"
@@ -41,10 +39,6 @@ Global
 		{4CEDFEF1-8C7E-4E15-86AF-C09287DECC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CEDFEF1-8C7E-4E15-86AF-C09287DECC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CEDFEF1-8C7E-4E15-86AF-C09287DECC27}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19ABA0E5-6078-4F93-B544-C305551DB633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19ABA0E5-6078-4F93-B544-C305551DB633}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19ABA0E5-6078-4F93-B544-C305551DB633}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19ABA0E5-6078-4F93-B544-C305551DB633}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86C0C95F-239B-4B6D-B614-C12D604E8D15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86C0C95F-239B-4B6D-B614-C12D604E8D15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86C0C95F-239B-4B6D-B614-C12D604E8D15}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,9 +50,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{19ABA0E5-6078-4F93-B544-C305551DB633} = {C19A3DB6-FDFE-4E44-B0C9-7FBED958AC2F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3AC70B80-6A60-4E3C-84F5-9A696E8693F4}

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "FreeRP.GrpcService.User";
+import "core.proto";
+
+package user;
+
+service UserService {
+	rpc Login (core.User) returns (core.LoginResponse);
+	rpc LoginWithToken (TokenRequest) returns (core.LoginResponse);
+	rpc GetUser(core.Empty) returns (core.User);
+	rpc GetData(core.Empty) returns (UserData);
+
+	rpc UserChange (core.User) returns (core.Response);
+	rpc UserChangePassword (core.User) returns (core.Response);
+}
+
+message TokenRequest {
+	string token = 1;
+}
+
+message UserData {
+	core.User user = 1;
+}

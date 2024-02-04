@@ -1,0 +1,21 @@
+{
+  "serverName": "FreeRP",
+  "iconUrl": "/icon.svg",
+  "appRoot": "C:\\Users\\wycic\\source\\repos\\FreeRP\\src\\FreeRP.Net.Server",
+  "frpRootPath": "C:\\Users\\wycic\\source\\repos\\FreeRP\\src\\FreeRP.Net.Server\\frpdata",
+  "tempRootPath": "C:\\Users\\wycic\\source\\repos\\FreeRP\\src\\FreeRP.Net.Server\\frpdata\\tmp",
+  "contentRootPath": "C:\\Users\\wycic\\source\\repos\\FreeRP\\src\\FreeRP.Net.Server\\frpdata\\directory",
+  "publicRootPath": "C:\\Users\\wycic\\source\\repos\\FreeRP\\src\\FreeRP.Net.Server\\frpdata\\public",
+  "pluginRootPath": "C:\\Users\\wycic\\source\\repos\\FreeRP\\src\\FreeRP.Net.Server\\frpdata\\plug",
+  "databasesRootPath": "C:\\Users\\wycic\\source\\repos\\FreeRP\\src\\FreeRP.Net.Server\\frpdata\\db",
+  "withPassword": true,
+  "passwordLength": 8,
+  "passwordSalt": "iNl/QSyCu0iqLn920Gn6Qw==",
+  "jwtKey": "4642dcbbe1cf4eebae5c4922daac9d68",
+  "jwtExpireHours": 24,
+  "admin": "admin",
+  "adminPassword": "admin",
+  "adminId": "0",
+  "grpcMessageSize": 4194304,
+  "grpcTransportDeadlineMinutes": 5
+}

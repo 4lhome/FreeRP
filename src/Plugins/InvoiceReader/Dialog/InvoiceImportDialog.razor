@@ -1,0 +1,73 @@
+﻿@implements IDialogContentComponent<List<Data.InvoiceImporter>>
+@inject IDialogService dlg
+@inject FreeRP.Net.Client.Translation.I18nService i18n
+
+<FluentDialogHeader ShowDismiss="true">
+    <FluentLabel Typo="Typography.PaneHeader">
+        @i18n.Text.Upload
+    </FluentLabel>
+</FluentDialogHeader>
+
+<FluentDialogBody>
+    <FluentInputFile @ref="@myFileByStream"
+        Id="invoiceUploader"
+        Mode="InputFileMode.Stream"
+        Multiple="true" 
+        MaximumFileSize="@fileSizeInMb" 
+        MaximumFileCount="@fileCount" 
+        Accept="@accept" 
+        OnFileUploaded="@OnFileUploadedAsync">
+        <ChildContent>
+            <FluentStack Orientation="Orientation.Vertical" VerticalGap="10">
+                <p for="invoiceUploader" style="text-align: center;">
+                    @i18n.Text.UploadFile<br />
+                    @i18n.Text.UploadMaximumFileSize.Replace("{0}", $"{fileSizeInMb} MB")<br />
+                    @i18n.Text.UploadMaximumFileCount.Replace("{0}", fileCount.ToString())<br />
+                    @i18n.Text.UploadAccept.Replace("{0}", accept)<br />
+                </p>
+                <FluentProgress Min="0" Max="100" Value="@progressPercent" Visible="@(progressPercent > 0)" />
+                <FluentLabel Alignment="HorizontalAlignment.Center">
+                    @progressTitle
+                </FluentLabel>
+            </FluentStack>
+        </ChildContent>
+    </FluentInputFile>
+</FluentDialogBody>
+
+<FluentDialogFooter Visible="false">
+</FluentDialogFooter>
+
+@code {
+
+    FluentInputFile? myFileByStream = default!;
+
+    int? progressPercent;
+    string? progressTitle;
+    bool IsCanceled;
+
+    int fileSizeInMb = 20 * 1024 * 1024;
+    int fileCount = 10;
+    string accept = ".jpg, .png, .tiff, .pdf";
+
+    [CascadingParameter]
+    public FluentDialog Dialog { get; set; } = default!;
+
+    [Parameter]
+    public List<Data.InvoiceImporter> Content { get; set; } = default!;
+
+    async Task OnFileUploadedAsync(FluentInputFileEventArgs file)
+    {
+        progressPercent = file.ProgressPercent;
+        progressTitle = file.ProgressTitle;
+
+        if (file.Stream is not null)
+        {
+            MemoryStream ms = new();
+            await file.Stream.CopyToAsync(ms);
+            await file.Stream.DisposeAsync();
+
+            Content.Add(new Data.InvoiceImporter() { FileAsBase64 = Convert.ToBase64String(ms.ToArray()), FileName = file.Name });
+            await ms.DisposeAsync();
+        }
+    }
+}

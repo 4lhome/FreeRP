@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option csharp_namespace = "FreeRP.GrpcService.Admin";
+import "core.proto";
+import "plugin.proto";
+
+package admin;
+
+service AdminService {
+	rpc IntallPlugin(InstallPluginRequest) returns (core.Response);
+
+	rpc Login (core.User) returns (core.LoginResponse);
+
+	rpc DataAccessCreate (core.DataAccess) returns (core.Response);
+	rpc DataAccessChange (core.DataAccess) returns (core.Response);
+	rpc DataAccessDelete (core.DataAccess) returns (core.Response);
+
+	rpc UsersGet (core.Empty) returns (UsersResponse);
+	rpc UserCreate (core.User) returns (core.Response);
+	rpc UserChange (core.User) returns (core.Response);
+	rpc UserChangePassword (core.User) returns (core.Response);
+	rpc UserDelete (core.User) returns (core.Response);
+
+	rpc RolesGet (core.Empty) returns (RolesResponse);
+	rpc RoleCreate (core.Role) returns (core.Response);
+	rpc RoleChange (core.Role) returns (core.Response);
+	rpc RoleDelete (core.Role) returns (core.Response);
+	rpc RoleAddUser (core.UserInRole) returns (core.Response);
+	rpc RoleDeleteUser (core.UserInRole) returns (core.Response);
+
+	rpc PluginRoleAdd (plugin.PluginRole) returns (core.Response);
+	rpc PluginRoleDelete (plugin.PluginRole) returns (core.Response);
+}
+
+message UsersResponse {
+	// Error
+	core.ErrorType error_type = 1;
+	repeated core.User users = 2;
+}
+
+message RolesResponse {
+	// Error
+	core.ErrorType error_type = 1;
+	repeated core.Role roles = 2;
+	repeated core.UserInRole user_in_roles = 3;
+}
+
+message InstallPluginRequest
+{
+	string path = 1;
+	bool is_file = 2;
+}

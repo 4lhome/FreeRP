@@ -1,0 +1,169 @@
+syntax = "proto3";
+
+option csharp_namespace = "FreeRP.GrpcService.Core";
+import "google/protobuf/timestamp.proto";
+
+package core;
+
+//Null object
+message Empty {}
+
+//JWT Token and expiration date
+message LoginResponse {
+	string token = 1;
+	google.protobuf.Timestamp expiration_date = 2;
+	User user = 3;
+}
+
+//Default response
+message Response
+{
+	// Error
+	ErrorType error_type = 1;
+
+	// Error
+	ErrorType error_type_2 = 2;
+
+	// Error message
+	string message = 3;
+
+	// Data as JSON or any
+	string data = 4;
+}
+
+//Default error types
+enum ErrorType
+{
+	ErrorNone = 0;
+	ErrorUnknown = 1;
+	ErrorAccessDenied = 2;
+	ErrorNotExist = 3;
+	ErrorExist = 4;
+	ErrorDownloadFile = 5;
+	ErrorId = 6;
+	ErrorEmailInvalid = 7;
+
+	ErrorPasswordToShort = 20;
+	ErrorPasswordNumber = 21;
+	ErrorPasswordUpperChar = 22;
+	ErrorPasswordLowerChar = 23;
+	ErrorPasswordSymbols = 24;
+
+	ErrorDatabaseId = 40;
+	ErrorDatabaseNotExist = 41;
+
+	ErrorDatabaseTableId = 50;
+	ErrorDatabaseSameTableId = 51;
+	ErrorDatabaseTableNotExist = 52;
+
+	ErrorDatabaseFieldId = 60;
+	ErrorDatabaseFieldIdNotExist = 61;
+	ErrorDatabaseSameFieldId = 62;
+	ErrorDatabaseFieldNotExist = 63;
+
+	ErrorUriSchemeNotSupported = 70;
+
+	ErrorFileExist = 90;
+	ErrorFileNotExist = 91;
+
+	ErrorDirectoryExist = 100;
+	ErrorDirectoryNotExist = 101;
+
+	ErrorDataAccessRoleNotExist = 120;
+}
+
+//Default user
+message User {
+	//User id
+	string user_id = 1;
+
+	//First name
+	string first_name = 2;
+
+	//Last name
+	string last_name = 3;
+
+	//Phone number
+	string phone = 5;
+
+	//Email is always required
+	string email = 6;
+
+	//The password or JWT token if is_api
+	string password = 7;
+
+	//A note
+	string note = 8;
+
+	//Is lock
+	bool is_lock = 9;
+
+	//Is a API only user
+	bool is_api = 10;
+
+	//Is the user a developer?
+	bool is_developer = 11;
+
+	//Used to set a date
+	int64 ticks = 12;
+
+	//User theme
+	Theme theme = 13;
+}
+
+message Theme {
+	float base_layer_luminance = 1;
+	string accent_base_color = 2;
+	bool text_right = 3;
+}
+
+message Role {
+	string role_id = 1;
+	string name = 2;
+}
+
+enum RoleRightType {
+	RoleRightDatabase = 0;
+	RoleRightFile = 1;
+	RoleRightFolder = 2;
+}
+
+message UserInRole {
+	string user_in_role_id = 1;
+	string user_id = 2;
+	string role_id = 3;
+}
+
+message DataAccess {
+
+	string role_data_access_id = 1;
+	string role_id = 2;
+	string data_access_id = 3;
+	bool read = 4;
+    bool create = 5;
+    bool delete = 6;
+    bool change = 7;
+}
+
+message FrpUtcDateTime {
+  //Year of date.
+  int32 year = 1;
+
+  // Month of year. Must be from 1 to 12.
+  int32 month = 2;
+
+  // Day of month. Must be from 1 to 31 and valid for the year and month.
+  int32 day = 3;
+
+  // Hours of day in 24 hour format.
+  int32 hours = 4;
+
+  // Minutes of hour of day. Must be from 0 to 59.
+  int32 minutes = 5;
+
+  // Seconds of minutes of the time. Must normally be from 0 to 59.
+  int32 seconds = 6;
+
+  // Unix timestamp
+  int64 UnixTimeSeconds = 7;
+}

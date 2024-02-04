@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+option csharp_namespace = "FreeRP.GrpcService.Content";
+import "core.proto";
+
+package content;
+
+service ContentService {
+
+	//Create directory
+	rpc DirectoryCreate (ContentUriRequest) returns (core.Response);
+
+	//Change directory
+	rpc DirectoryPathChange (ChangeContentUriRequest) returns (core.Response);
+
+	//Delete directory
+	rpc DirectoryDelete (ContentUriRequest) returns (core.Response);
+
+	//Get directories and files
+	rpc GetContentTree (ContentUriRequest) returns (ContentTreeResponse);
+
+	// Create file 
+	rpc FileCreate (ContentUriRequest) returns (ContentStream);
+
+	// Write file stream
+	rpc FileStreamWrite (ContentStream) returns (ContentStream);
+
+	// Open file 
+	rpc FileOpen (ContentUriRequest) returns (ContentStream);
+
+	// Read file stream
+	rpc FileStreamRead (ContentStream) returns (ContentStream);
+
+	//Change file
+	rpc FilePathChange (ChangeContentUriRequest) returns (core.Response);
+
+	//Delete file
+	rpc FileDelete (ContentUriRequest) returns (core.Response);
+}
+
+message ContentUriRequest {
+	// Uniform Resource Identifier
+	string uri = 1;
+
+	// Replace if exist
+	bool replace = 3;
+}
+
+//Moves a file or a directory and its contents to a new location.
+message ChangeContentUriRequest {
+
+	//The path of the file or directory to move or copy.
+	string source_uri = 1;
+
+	//The path to the new location for sourceDirName or its contents. If sourceDirName is a file, then destDirName must also be a file name.
+	string dest_uri = 2;
+
+	// Replace if exist
+	bool replace = 3;
+
+	// Copy to new location
+	bool copy = 4;
+}
+
+message ContentTreeResponse {
+	core.ErrorType error_type = 1;
+	repeated FrpDirectory directories = 2;
+	repeated FrpFile files = 3;
+}
+
+message FrpDirectory {
+	// Uniform Resource Identifier
+	string uri = 1;
+
+	// Name of the directory
+	string name = 2;
+
+	// Directory create
+	core.FrpUtcDateTime create = 3;
+
+	// Directory change
+	core.FrpUtcDateTime change = 4;
+}
+
+message FrpFile {
+
+	// Uniform Resource Identifier
+	string uri = 1;
+
+	// Name of the file
+	string name = 2;
+	
+	// Size of the file in byte
+	uint64 size = 3;
+
+	// File create
+	core.FrpUtcDateTime create = 4;
+
+	// File change
+	core.FrpUtcDateTime change = 5;
+}
+
+message ContentStream {
+	string id = 1;
+	core.ErrorType error_type = 2;
+	bool e_o_f = 3;
+	bytes data = 4;
+}

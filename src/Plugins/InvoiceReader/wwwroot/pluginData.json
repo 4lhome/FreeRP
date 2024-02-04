@@ -1,0 +1,18 @@
+{
+  "Plugin": {
+    "pluginId": "InvoiceReader.TWyTec.com",
+    "name": "InvoiceReader",
+    "description": "",
+    "authors": "TWyTec",
+    "license_url": "",
+    "project_url": "",
+    "update_url": "",
+    "icon": "",
+    "version": "",
+    "external": false,
+    "external_url": "",
+    "databases": [
+      "Database.InvoiceReader.TWyTec.com"
+    ]
+  }
+}

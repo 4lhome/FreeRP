@@ -1,0 +1,244 @@
+syntax = "proto3";
+
+option csharp_namespace = "FreeRP.GrpcService.Database";
+import "core.proto";
+
+package database;
+
+service DatabaseService
+{
+	rpc DatabaseGet(DataRequest) returns(core.Response);
+
+	rpc DatabaseOpen(Database) returns(core.Response);
+	rpc DatabaseSaveChanges(Database) returns(core.Response);
+	rpc DatabaseItemAdd(DataRequest) returns(core.Response);
+	rpc DatabaseItemUpdate(DataRequest) returns(core.Response);
+	rpc DatabaseItemRemove(DataRequest) returns(core.Response);
+	rpc DatabaseItemQuery(QueryRequest) returns(QueryResponse);
+
+	//Create database
+	rpc DatabaseCreate (Database) returns (core.Response);
+	rpc DatabaseChange (Database) returns (core.Response);
+	rpc DatabaseDelete (Database) returns (core.Response);
+}
+
+//A database
+message Database {
+	//Database id
+	string database_id = 1;
+
+	//The name of the Database
+	string name = 2;
+
+	//The description of the Database
+	string description = 3;
+
+	//The connection string to database
+	string connection_string = 4;
+
+	//The database provider 
+	DatabaseProvider database_provider = 5;
+
+	//Tables
+	repeated DatabaseTable tables = 6;
+
+	//Allow unknown tables
+	bool allow_unknown_tables = 7;
+
+	//Allow read
+	bool read = 8;
+
+	//Allow create/add
+    bool create = 9;
+
+	//Allow delete
+    bool delete = 10;
+
+	//Allow change
+    bool change = 11;
+}
+
+//Supported databases
+enum DatabaseProvider {
+	SQLite = 0;
+}
+
+//A table of a database
+message DatabaseTable {
+	//Table id
+	string table_id = 1;
+
+	//The name of the table
+	string name = 2;
+
+	//The description of the table
+	string description = 3;
+
+	//Table fields
+	repeated DatabaseTableField fields = 4;
+
+	//Maximum records per query
+	int32 max_records_per_query = 5;
+
+	//Right mode
+	RightMode right_mode = 6;
+
+	//Allow unknown fields
+	bool allow_unknown_fields = 7;
+
+	//Allow read
+	bool read = 8;
+
+	//Allow create/add
+    bool create = 9;
+
+	//Allow delete
+    bool delete = 10;
+
+	//Allow change
+    bool change = 11;
+}
+
+//A field of a table
+message DatabaseTableField {
+	//Field id
+	string field_id = 1;
+
+	//Is Id
+	bool is_id = 2;
+
+	//The name of field
+	string name = 3;
+
+	//Field description
+	string description = 4;
+
+	//The type of the field
+	DatabaseDataType data_type = 5;
+
+	//Fields
+	repeated DatabaseTableField fields = 6;
+
+	//Allow read
+	bool read = 7;
+
+	//Allow create/add
+    bool create = 8;
+
+	//Allow delete
+    bool delete = 9;
+
+	//Allow change
+    bool change = 10;
+}
+
+//A data type
+enum DatabaseDataType {
+	FieldNull = 0;
+	FieldString = 1;
+	FieldNumber = 2;
+	FieldArray = 3;
+	FieldBoolean = 4;
+	FieldObject = 5;
+}
+
+enum RightMode
+{
+	RightModeRole = 0;
+	RightModeUser = 1;
+	RightModeCustom = 2;
+}
+
+message DataRequest
+{
+	string database_id = 1;
+	string table_id = 2;
+	bytes data = 3;
+}
+
+message DataAsJson {
+	string id = 1;
+	string json = 2;
+}
+
+message QueryRequest
+{
+	string database_id = 1;
+	string table_id = 2;
+	repeated Query queries = 3;
+	int32 take = 4;
+	int32 skipe = 5;
+}
+
+message QueryResponse
+{
+	repeated DataAsJson data = 3;
+	core.Response error = 2;
+}
+
+message Query {
+	bool is_member = 1;
+	QueryType member_type = 2;
+	string name = 3;
+	string value = 4;
+	QueryType value_type = 5;
+	QueryType call_type = 6;
+	QueryType next = 7;
+}
+
+enum QueryType {
+	QueryNone = 0;
+
+	QueryGreaterThan = 1;
+	QueryGreaterThanOrEqual = 2;
+	QueryLessThan = 3;
+	QueryLessThanOrEqual = 4;
+	QueryEqual = 5;
+	QueryNotEqual = 6;
+	QueryAnd = 7;
+	QueryOr = 8;
+	QueryAndAlso = 9;
+	QueryOrElse = 10;
+	QueryAdd = 11;
+	QueryMultiply = 12;
+	QuerySubtract = 13;
+	QueryDivide = 14;
+
+	ValueNull = 50;
+	ValueString = 51;
+	ValueNumber = 52;
+	ValueArray = 53;
+	ValueBoolean = 54;
+	ValueObject = 55;
+	ValueFrpDateTime = 56;
+	ValueFrpFile = 57;
+
+	CallContains = 100;
+	CallStartWith = 101;
+	CallEndsWith = 102;
+	CallEquals = 103;
+	CallToLower = 104;
+	CallToUpper = 105;
+	CallIsNullOrEmpty = 106;
+	CallCount = 107;
+	CallArrayIndex = 108;
+	CallIndexOf = 109;
+}
+
+message Record {
+	string record_id = 1;
+	string record_type = 2;
+	int64 ticks = 3;
+	string change_by = 4;
+	string data_as_json = 5;
+	string owner = 6;
+}
+
+message RecordChanged {
+	string record_changed_id = 1;
+	string records_as_json_array = 2;
+	int64 ticks = 3;
+	string change_by = 4;
+	bool delete = 5;
+}
+

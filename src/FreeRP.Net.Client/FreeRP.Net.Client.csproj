@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Translation\Lang\de.json" />
+	  <EmbeddedResource Include="Translation\Lang\en.json" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Protobuf Include="..\Protos\core.proto" ProtoRoot="..\Protos\" />
+		<Protobuf Include="..\Protos\connect.proto" ProtoRoot="..\Protos\" />
+		<Protobuf Include="..\Protos\content.proto" ProtoRoot="..\Protos\" />
+		<Protobuf Include="..\Protos\pdf.proto" ProtoRoot="..\Protos\" />
+		<Protobuf Include="..\Protos\plugin.proto" ProtoRoot="..\Protos\" />
+		<Protobuf Include="..\Protos\database.proto" ProtoRoot="..\Protos\" />
+		<Protobuf Include="..\Protos\admin.proto" ProtoRoot="..\Protos\" />
+		<Protobuf Include="..\Protos\user.proto" ProtoRoot="..\Protos\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components" Version="4.3.1" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.3.1" />
+		<PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.3.1" />
+		<PackageReference Include="Google.Protobuf" Version="3.25.2" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.60.0" />
+		<PackageReference Include="Grpc.Net.Client.Web" Version="2.60.0" />
+		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.60.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.60.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="PdfPig" Version="0.1.8" />
+	</ItemGroup>
+
+</Project>

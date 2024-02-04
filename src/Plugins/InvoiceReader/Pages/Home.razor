@@ -1,0 +1,35 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<FluentStack Orientation="Orientation.Vertical" Style="width: 100%; height: 100vh; overflow-y: auto;" VerticalGap="10">
+    <FluentInputFile @ref="@myFileByStream"
+                     Id="invoiceUploader"
+                     Mode="InputFileMode.Stream"
+                     Multiple="true"
+                     MaximumFileSize="@fileSizeInB"
+                     MaximumFileCount="@fileCount"
+                     Accept="@accept"
+                     
+                     OnCompleted="OnCompletedAsync"
+                     @bind-ProgressPercent="@progressPercent"
+                     Style="height: 110px; width: 100%; padding: 8px;">
+        <ChildContent>
+            <p style="text-align: center; margin: 4px;">
+                @I18nService.Text.UploadFile<br />
+                @I18nService.Text.UploadMaximumFileSize.Replace("{0}", $"{fileSizeInMb} MB") -
+                @I18nService.Text.UploadMaximumFileCount.Replace("{0}", fileCount.ToString()) -
+                @I18nService.Text.UploadAccept.Replace("{0}", accept)
+            </p>
+        </ChildContent>
+    </FluentInputFile>
+    <FluentStack>
+        @foreach (var file in invoiceImporters)
+        {
+            @foreach (var img in file.Images)
+            {
+                <img src="@img.Value.Image" style="width: 80px;" />
+            }
+        }
+    </FluentStack>
+</FluentStack>

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "FreeRP.GrpcService.Connect";
+
+package connect;
+
+service ConnectService {
+	rpc Connect (ConnectRequest) returns (ConnectResponse);
+	rpc CheckConnection (PingData) returns (PingData);
+	rpc CheckAuthorize (PingData) returns (PingData);
+}
+
+message ConnectRequest {
+	
+}
+
+message ConnectResponse {
+	bool with_password = 1;
+	int32 password_length = 2;
+	int32 grpc_message_size = 3;
+}
+
+message PingData { }
